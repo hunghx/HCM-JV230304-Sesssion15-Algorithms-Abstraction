@@ -1,6 +1,9 @@
 package ra.sorting;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Sorting {
     // thuật toán sắp xêp nổi bọt
@@ -23,6 +26,47 @@ public class Sorting {
             }
         }
     }
+
+    public static <T extends Comparable<T>> void bubbleSort(T[] arr){
+        // tối ưu thuật toán
+        boolean isNext = true;
+
+        for(int i=0; i< arr.length-1 && isNext; i++){ // duyệt đến phần tử gần cuối
+            System.out.println("Vòng lặp i : "+i);
+            isNext = false;
+            for (int j = 0; j< arr.length-1-i; j++){
+                System.out.println("\tvòng lặp j :"+j);
+                if (arr[j].compareTo(arr[j+1]) > 0){
+                    // đổi vị trí 2 phần tử
+                    T temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    isNext = true; // nếu như có sự đổi chỗ 2 phâ ử thì mảng vẫn cần được sắp xếp
+                }
+            }
+        }
+
+    }
+    public static <T> void bubbleSort(T[] arr, Comparator<T> comparator){
+        // tối ưu thuật toán
+        boolean isNext = true;
+
+        for(int i=0; i< arr.length-1 && isNext; i++){ // duyệt đến phần tử gần cuối
+            System.out.println("Vòng lặp i : "+i);
+            isNext = false;
+            for (int j = 0; j< arr.length-1-i; j++){
+                System.out.println("\tvòng lặp j :"+j);
+                if (comparator.compare(arr[j],arr[j+1]) > 0 ){
+                    // đổi vị trí 2 phần tử
+                    T temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    isNext = true; // nếu như có sự đổi chỗ 2 phâ ử thì mảng vẫn cần được sắp xếp
+                }
+            }
+        }
+    }
+
 
     // Thuat toán sắp xếp chọn
     public static void selectionSort(int[] arr){
@@ -64,10 +108,17 @@ public class Sorting {
     }
 
     public static void main(String[] args) {
-        int[] arr = {1,9,3,8,5,2,7};
+        String[] arr = {"hung", "anh", "nam"};
+        Integer[] arrInt = {3,4,5,2,0,1};
+        bubbleSort(arrInt);
+        System.out.println(Arrays.toString(arrInt));
 //        bubbleSort(arr);
 //        selectionSort(arr);
-        insertionSort(arr);
-        System.out.println(Arrays.toString(arr));
+//        insertionSort(arr);
+//        System.out.println(Arrays.toString(arr));
+
+        Person[] people = {new Person(1,"nam"),new Person(2,"hùng"),new Person(3,"khánh")};
+        bubbleSort(people,(o1, o2) -> o2.getId()-o1.getId());
+        System.out.println(Arrays.toString(people));
     }
 }
